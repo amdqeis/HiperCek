@@ -1,0 +1,30 @@
+{
+  "features": [
+    "age",
+    "bmi",
+    "systolic_bp",
+    "diastolic_bp",
+    "family_history",
+    "smoking_status",
+    "physical_activity_level",
+    "diabetes"
+  ],
+  "numeric_features": [
+    "age",
+    "bmi",
+    "systolic_bp",
+    "diastolic_bp",
+    "family_history",
+    "diabetes"
+  ],
+  "categorical_features": [
+    "smoking_status",
+    "physical_activity_level"
+  ],
+  "target": "hypertension",
+  "best_model": "Random Forest",
+  "training_country": "Indonesia",
+  "dataset_rows": 8723,
+  "max_model_size_mb": 100.0,
+  "model_size_mb": 2.15
+}
