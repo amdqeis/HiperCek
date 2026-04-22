@@ -5,15 +5,14 @@ set -Eeuo pipefail
 usage() {
   cat <<'EOF'
 Usage:
-  ./deploy_to_vps.sh --host 1.2.3.4 --user ubuntu --domain api.example.com --email admin@example.com [options]
-  ./deploy_to_vps.sh --host 1.2.3.4 --user ubuntu --domain hipercek.keispace.cloud --email ahmad.qeis122@gmail.com
+  ./deploy/deploy_ml_to_vps.sh --host 1.2.3.4 --user ubuntu --domain api.example.com --email admin@example.com [options]
 
 Options:
   --host HOST             IP atau hostname VPS.
   --user USER             User SSH di VPS.
   --domain DOMAIN         Domain yang sudah diarahkan ke VPS.
   --email EMAIL           Email untuk sertifikat SSL Let's Encrypt.
-  --remote-dir DIR        Folder tujuan FastAPI di VPS. Default: /home/USER/apps/hipercek-machinelearning
+  --remote-dir DIR        Folder tujuan di VPS. Default: /home/USER/apps/hiperCek
   --port PORT             Port lokal FastAPI di VPS. Default: 8000
   --app-name NAME         Nama app PM2. Default: hipercek-ml-api
   --skip-ssl              Lewati proses SSL certbot.
@@ -89,11 +88,13 @@ if [[ -z "$HOST" || -z "$SSH_USER" || -z "$DOMAIN" || -z "$EMAIL" ]]; then
 fi
 
 if [[ -z "$REMOTE_DIR" ]]; then
-  REMOTE_DIR="/home/${SSH_USER}/apps/hipercek-machinelearning"
+  REMOTE_DIR="/home/${SSH_USER}/apps/hiperCek"
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REMOTE_SCRIPT="${REMOTE_DIR}/deploy/setup_vps.sh"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+LOCAL_ML_DIR="${ROOT_DIR}/MachineLearning"
+REMOTE_ML_DIR="${REMOTE_DIR}/MachineLearning"
+REMOTE_SCRIPT="${REMOTE_ML_DIR}/deploy/setup_vps.sh"
 SSH_TARGET="${SSH_USER}@${HOST}"
 
 ssh "${SSH_TARGET}" "mkdir -p '${REMOTE_DIR}'"
@@ -103,7 +104,7 @@ rsync -az --delete \
   --exclude '__pycache__' \
   --exclude '*.pyc' \
   --exclude '.pytest_cache' \
-  "${SCRIPT_DIR}/" "${SSH_TARGET}:${REMOTE_DIR}/"
+  "${LOCAL_ML_DIR}/" "${SSH_TARGET}:${REMOTE_ML_DIR}/"
 
 REMOTE_CMD="chmod +x '${REMOTE_SCRIPT}' && sudo '${REMOTE_SCRIPT}' --domain '${DOMAIN}' --email '${EMAIL}' --app-user '${SSH_USER}' --port '${PORT}' --app-name '${APP_NAME}'"
 
@@ -117,5 +118,5 @@ fi
 
 ssh -t "${SSH_TARGET}" "${REMOTE_CMD}"
 
-echo "Deploy FastAPI MachineLearning selesai ke ${SSH_TARGET}"
+echo "Deploy MachineLearning selesai ke ${SSH_TARGET}"
 echo "Cek API di https://${DOMAIN}/docs"
