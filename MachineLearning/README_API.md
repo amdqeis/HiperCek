@@ -62,6 +62,75 @@ Dokumentasi interaktif FastAPI tersedia di:
 http://127.0.0.1:8000/docs
 ```
 
+## Deploy ke VPS dengan PM2 + Domain + SSL
+
+File deploy yang sudah disiapkan:
+
+- `MachineLearning/ecosystem.config.cjs`
+- `MachineLearning/deploy/setup_vps.sh`
+- `MachineLearning/deploy/nginx-machinelearning.conf.template`
+- `deploy/deploy_ml_to_vps.sh`
+
+### Prasyarat
+
+- Domain sudah diarahkan ke IP VPS lewat DNS record `A`
+- User SSH di VPS punya akses `sudo`
+- Port `80` dan `443` terbuka di firewall VPS
+
+### Opsi 1: Deploy otomatis dari laptop/local
+
+Jalankan dari root project:
+
+```bash
+chmod +x deploy/deploy_ml_to_vps.sh
+
+./deploy/deploy_ml_to_vps.sh \
+  --host 1.2.3.4 \
+  --user ubuntu \
+  --domain api.contoh.com \
+  --email admin@contoh.com
+```
+
+Script ini akan:
+
+- upload folder `MachineLearning` ke VPS
+- install dependency Python
+- install `nginx`, `certbot`, `nodejs`, dan `pm2`
+- menjalankan `api.py` lewat `uvicorn` di `pm2`
+- membuat reverse proxy `nginx`
+- memasang sertifikat SSL Let's Encrypt
+
+### Opsi 2: Jika folder sudah ada di VPS
+
+Masuk ke VPS lalu jalankan:
+
+```bash
+cd /path/ke/MachineLearning
+chmod +x deploy/setup_vps.sh
+
+sudo ./deploy/setup_vps.sh \
+  --domain api.contoh.com \
+  --email admin@contoh.com \
+  --app-user ubuntu
+```
+
+### Port dan nama app PM2 kustom
+
+```bash
+sudo ./deploy/setup_vps.sh \
+  --domain api.contoh.com \
+  --email admin@contoh.com \
+  --app-user ubuntu \
+  --port 8010 \
+  --app-name hipercek-ml-prod
+```
+
+### Setelah deploy
+
+- Dokumentasi FastAPI: `https://domain-kamu/docs`
+- Cek proses PM2: `pm2 list`
+- Lihat log PM2: `pm2 logs hipercek-ml-api`
+
 ## Contoh Penggunaan
 
 ### cURL
