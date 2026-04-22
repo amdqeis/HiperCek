@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DOMAIN="yourdomain.com"
+DOMAIN="hipercek.keispace.cloud"
 
 log() {
   echo "[deploy] $1"
