@@ -6,6 +6,7 @@ usage() {
   cat <<'EOF'
 Usage:
   sudo ./deploy/setup_vps.sh --domain api.example.com --email admin@example.com [options]
+  sudo ./deploy/setup_vps.sh --domain hipercek.keispace.cloud --email ahmad.qeis122@gmail.com 
 
 Options:
   --domain DOMAIN         Domain yang akan diarahkan ke API.
