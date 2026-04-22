@@ -6,10 +6,9 @@ usage() {
   cat <<'EOF'
 Usage:
   sudo ./deploy/setup_vps.sh --domain api.example.com --email admin@example.com [options]
-  sudo ./deploy/setup_vps.sh --domain hipercek.keispace.cloud --email ahmad.qeis122@gmail.com 
 
 Options:
-  --domain DOMAIN         Domain yang akan diarahkan ke API.
+  --domain DOMAIN         Domain yang akan diarahkan ke FastAPI.
   --email EMAIL           Email untuk registrasi SSL Let's Encrypt.
   --port PORT             Port lokal FastAPI di VPS. Default: 8000
   --app-name NAME         Nama app PM2. Default: hipercek-ml-api
@@ -87,16 +86,15 @@ if ! id "$APP_USER" >/dev/null 2>&1; then
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ML_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-TEMPLATE_PATH="$SCRIPT_DIR/nginx-machinelearning.conf.template"
+APP_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+TEMPLATE_PATH="${SCRIPT_DIR}/nginx-machinelearning.conf.template"
 APP_HOME="$(getent passwd "$APP_USER" | cut -d: -f6)"
-PM2_BIN="$(command -v pm2 || true)"
 NGINX_AVAILABLE="/etc/nginx/sites-available/${DOMAIN}"
 NGINX_ENABLED="/etc/nginx/sites-enabled/${DOMAIN}"
 
 run_as_app_user() {
   local command="$1"
-  su - "$APP_USER" -s /bin/bash -c "export PATH='/usr/local/bin:/usr/bin:/bin'; export PM2_HOME='${APP_HOME}/.pm2'; export PORT='${PORT}'; export PM2_APP_NAME='${APP_NAME}'; cd '${ML_DIR}'; ${command}"
+  su - "$APP_USER" -s /bin/bash -c "export PATH='/usr/local/bin:/usr/bin:/bin'; export PM2_HOME='${APP_HOME}/.pm2'; export PORT='${PORT}'; export PM2_APP_NAME='${APP_NAME}'; cd '${APP_DIR}'; ${command}"
 }
 
 install_packages() {
@@ -116,28 +114,29 @@ install_packages() {
 }
 
 install_python_dependencies() {
-  python3 -m venv "${ML_DIR}/venv"
-  "${ML_DIR}/venv/bin/pip" install --upgrade pip
-  "${ML_DIR}/venv/bin/pip" install -r "${ML_DIR}/requirements.txt"
-  chown -R "${APP_USER}:${APP_USER}" "${ML_DIR}"
+  python3 -m venv "${APP_DIR}/venv"
+  "${APP_DIR}/venv/bin/pip" install --upgrade pip
+  "${APP_DIR}/venv/bin/pip" install -r "${APP_DIR}/requirements.txt"
+  chown -R "${APP_USER}:${APP_USER}" "${APP_DIR}"
 }
 
 configure_pm2() {
-  PM2_BIN="$(command -v pm2 || true)"
+  local pm2_bin
+  pm2_bin="$(command -v pm2 || true)"
 
-  if [[ -z "$PM2_BIN" ]]; then
+  if [[ -z "$pm2_bin" ]]; then
     echo "PM2 tidak ditemukan. Pastikan instalasi package berjalan sukses." >&2
     exit 1
   fi
 
-  if run_as_app_user "${PM2_BIN} describe '${APP_NAME}' >/dev/null 2>&1"; then
-    run_as_app_user "${PM2_BIN} reload '${APP_NAME}' --update-env"
+  if run_as_app_user "${pm2_bin} describe '${APP_NAME}' >/dev/null 2>&1"; then
+    run_as_app_user "${pm2_bin} reload '${APP_NAME}' --update-env"
   else
-    run_as_app_user "${PM2_BIN} start '${ML_DIR}/ecosystem.config.cjs' --update-env"
+    run_as_app_user "${pm2_bin} start '${APP_DIR}/ecosystem.config.cjs' --update-env"
   fi
 
-  run_as_app_user "${PM2_BIN} save"
-  "${PM2_BIN}" startup systemd -u "${APP_USER}" --hp "${APP_HOME}" >/dev/null
+  run_as_app_user "${pm2_bin} save"
+  "${pm2_bin}" startup systemd -u "${APP_USER}" --hp "${APP_HOME}" >/dev/null
 }
 
 configure_nginx() {
@@ -174,7 +173,7 @@ fi
 
 systemctl restart nginx
 
-echo "Deploy selesai."
+echo "Deploy FastAPI selesai."
 echo "PM2 app : ${APP_NAME}"
 echo "Domain  : https://${DOMAIN}"
-echo "App dir : ${ML_DIR}"
+echo "App dir : ${APP_DIR}"

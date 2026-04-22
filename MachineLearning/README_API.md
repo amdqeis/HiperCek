@@ -64,12 +64,12 @@ http://127.0.0.1:8000/docs
 
 ## Deploy ke VPS dengan PM2 + Domain + SSL
 
-File deploy yang sudah disiapkan:
+File deploy yang sudah disiapkan di folder `MachineLearning`:
 
-- `MachineLearning/ecosystem.config.cjs`
-- `MachineLearning/deploy/setup_vps.sh`
-- `MachineLearning/deploy/nginx-machinelearning.conf.template`
-- `deploy/deploy_ml_to_vps.sh`
+- `ecosystem.config.cjs`
+- `deploy_to_vps.sh`
+- `deploy/setup_vps.sh`
+- `deploy/nginx-machinelearning.conf.template`
 
 ### Prasyarat
 
@@ -77,14 +77,13 @@ File deploy yang sudah disiapkan:
 - User SSH di VPS punya akses `sudo`
 - Port `80` dan `443` terbuka di firewall VPS
 
-### Opsi 1: Deploy otomatis dari laptop/local
-
-Jalankan dari root project:
+### Opsi 1: Deploy otomatis dari folder `MachineLearning`
 
 ```bash
-chmod +x deploy/deploy_ml_to_vps.sh
+cd MachineLearning
+chmod +x deploy_to_vps.sh
 
-./deploy/deploy_ml_to_vps.sh \
+./deploy_to_vps.sh \
   --host 1.2.3.4 \
   --user ubuntu \
   --domain api.contoh.com \
@@ -93,7 +92,7 @@ chmod +x deploy/deploy_ml_to_vps.sh
 
 Script ini akan:
 
-- upload folder `MachineLearning` ke VPS
+- upload isi folder `MachineLearning` saja ke VPS
 - install dependency Python
 - install `nginx`, `certbot`, `nodejs`, dan `pm2`
 - menjalankan `api.py` lewat `uvicorn` di `pm2`
@@ -105,7 +104,7 @@ Script ini akan:
 Masuk ke VPS lalu jalankan:
 
 ```bash
-cd /path/ke/MachineLearning
+cd /path/ke/folder-fastapi-machinelearning
 chmod +x deploy/setup_vps.sh
 
 sudo ./deploy/setup_vps.sh \
