@@ -11,18 +11,24 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "hypertension_model.joblib"
-INFO_PATH = BASE_DIR / "hypertension_model_info.json"
+HYPERTENSION_MODEL_PATH = BASE_DIR / "hypertension_model.joblib"
+HYPERTENSION_INFO_PATH = BASE_DIR / "hypertension_model_info.json"
+CARDIOVASCULAR_MODEL_PATH = BASE_DIR / "cardiovascular_model.joblib"
+CARDIOVASCULAR_INFO_PATH = BASE_DIR / "cardiovascular_model_info.json"
 
 
-def load_model_info() -> dict:
-    with INFO_PATH.open("r", encoding="utf-8") as file:
+def load_model_info(info_path: Path) -> dict:
+    with info_path.open("r", encoding="utf-8") as file:
         return json.load(file)
 
 
-MODEL_INFO = load_model_info()
-MODEL = joblib.load(MODEL_PATH)
-FEATURE_ORDER = MODEL_INFO["features"]
+HYPERTENSION_MODEL_INFO = load_model_info(HYPERTENSION_INFO_PATH)
+HYPERTENSION_MODEL = joblib.load(HYPERTENSION_MODEL_PATH)
+HYPERTENSION_FEATURE_ORDER = HYPERTENSION_MODEL_INFO["features"]
+
+CARDIOVASCULAR_MODEL_INFO = load_model_info(CARDIOVASCULAR_INFO_PATH)
+CARDIOVASCULAR_MODEL = joblib.load(CARDIOVASCULAR_MODEL_PATH)
+CARDIOVASCULAR_FEATURE_ORDER = CARDIOVASCULAR_MODEL_INFO["features"]
 
 
 class HypertensionPredictionInput(BaseModel):
@@ -63,18 +69,83 @@ class HypertensionPredictionInput(BaseModel):
     )
 
 
+class CardiovascularPredictionInput(BaseModel):
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "age": 50,
+                "bmi": 26.5,
+                "systolic_bp": 140,
+                "diastolic_bp": 90,
+                "smoking_status": "Never",
+                "physical_activity_level": "Low",
+            }
+        }
+    )
+
+    age: float = Field(..., gt=0, description="Usia pasien dalam tahun.")
+    bmi: float = Field(..., gt=0, description="Body Mass Index.")
+    systolic_bp: float = Field(..., gt=0, description="Tekanan darah sistolik.")
+    diastolic_bp: float = Field(..., gt=0, description="Tekanan darah diastolik.")
+    smoking_status: str = Field(
+        ...,
+        description="Status merokok. Never menjadi smoke=0, selain itu smoke=1.",
+    )
+    physical_activity_level: str = Field(
+        ...,
+        description="Aktivitas fisik. Low menjadi active=0, selain itu active=1.",
+    )
+
+
 app = FastAPI(
-    title="Hypertension Risk API",
+    title="Health Risk API",
     description=(
-        "API sederhana untuk memprediksi persentase risiko hipertensi "
-        "berdasarkan model machine learning yang sudah dilatih."
+        "API sederhana untuk memprediksi persentase risiko hipertensi dan "
+        "penyakit kardiovaskular berdasarkan model machine learning yang sudah dilatih."
     ),
     version="1.0.0",
 )
 
 
+def normalize_text(value: str) -> str:
+    return value.strip().lower().replace("-", "_").replace(" ", "_")
+
+
+def map_smoking_status_to_smoke(smoking_status: str) -> int:
+    return 0 if normalize_text(smoking_status) in {"never", "vener", "tidak_pernah"} else 1
+
+
+def map_physical_activity_to_active(physical_activity_level: str) -> int:
+    return 0 if normalize_text(physical_activity_level) == "low" else 1
+
+
 @app.post("/predict", response_model=float, summary="Prediksi persentase risiko hipertensi")
 def predict_hypertension_percentage(payload: HypertensionPredictionInput) -> float:
-    sample = pd.DataFrame([[getattr(payload, feature) for feature in FEATURE_ORDER]], columns=FEATURE_ORDER)
-    probability = MODEL.predict_proba(sample)[0, 1] * 100
+    sample = pd.DataFrame(
+        [[getattr(payload, feature) for feature in HYPERTENSION_FEATURE_ORDER]],
+        columns=HYPERTENSION_FEATURE_ORDER,
+    )
+    probability = HYPERTENSION_MODEL.predict_proba(sample)[0, 1] * 100
+    return float(probability)
+
+
+@app.post(
+    "/predict/cardiovascular",
+    response_model=float,
+    summary="Prediksi persentase risiko penyakit kardiovaskular",
+)
+def predict_cardiovascular_percentage(payload: CardiovascularPredictionInput) -> float:
+    feature_values = {
+        "age": payload.age,
+        "bmi": payload.bmi,
+        "systolic": payload.systolic_bp,
+        "diastolic": payload.diastolic_bp,
+        "smoke": map_smoking_status_to_smoke(payload.smoking_status),
+        "active": map_physical_activity_to_active(payload.physical_activity_level),
+    }
+    sample = pd.DataFrame(
+        [[feature_values[feature] for feature in CARDIOVASCULAR_FEATURE_ORDER]],
+        columns=CARDIOVASCULAR_FEATURE_ORDER,
+    )
+    probability = CARDIOVASCULAR_MODEL.predict_proba(sample)[0, 1] * 100
     return float(probability)
