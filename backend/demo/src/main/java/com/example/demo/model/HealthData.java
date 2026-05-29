@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.Map;
+
 public class HealthData {
     private int usia;
     private int sistolik;
@@ -96,19 +98,50 @@ public class HealthData {
 
         // status merokok
         if (merokok == null ||
-            (!merokok.equals("tidak_pernah") &&
-             !merokok.equals("pernah") &&
-             !merokok.equals("aktif"))) {
+            (!merokok.equals("Never") &&
+             !merokok.equals("Former") &&
+             !merokok.equals("Current"))) {
             return false;
         }
 
         // aktivitas fisik
-        if (aktivitasFisik < 0 || aktivitasFisik > 7) {
+        if (aktivitasFisik < 0 || aktivitasFisik > 2) {
             return false;
         }
 
         return true;
     }
 
-  
+    public String getPhysicalActivityLevel() {
+        return switch (aktivitasFisik) {
+            case 0 -> "Low";
+            case 1 -> "Moderate";
+            case 2 -> "High";
+            default -> throw new IllegalStateException("Aktivitas fisik di luar rentang.");
+        };
+    }
+
+    public Map<String, Object> toHypertensionPayload() {
+        return Map.of(
+            "age", usia,
+            "bmi", bmi,
+            "systolic_bp", sistolik,
+            "diastolic_bp", diastolik,
+            "family_history", riwayatKeluarga ? 1 : 0,
+            "smoking_status", merokok,
+            "physical_activity_level", getPhysicalActivityLevel(),
+            "diabetes", diabetes ? 1 : 0
+        );
+    }
+
+    public Map<String, Object> toCardiovascularPayload() {
+        return Map.of(
+            "age", usia,
+            "bmi", bmi,
+            "systolic_bp", sistolik,
+            "diastolic_bp", diastolik,
+            "smoking_status", merokok,
+            "physical_activity_level", getPhysicalActivityLevel()
+        );
+    }
 }

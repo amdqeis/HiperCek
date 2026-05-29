@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f8ff;
+  --foreground: #18202f;
+  --surface: #ffffff;
+  --surface-soft: #edf3ff;
+  --border: rgba(101, 128, 183, 0.16);
+  --primary: #1856d0;
+  --primary-deep: #0e3fa4;
+  --primary-soft: #e8f0ff;
+  --muted: #6e7993;
+  --danger: #af3138;
+  --danger-soft: #ffe4e5;
+  --warning: #b17909;
+  --warning-soft: #fff0be;
+  --success: #16815b;
+  --shadow: 0 28px 64px rgba(22, 55, 124, 0.12);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-plus-jakarta-sans);
+  --font-heading: var(--font-space-grotesk);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  background-image:
+    radial-gradient(circle at top left, rgba(76, 130, 255, 0.14), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 192, 206, 0.18), transparent 24%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.heading-font {
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+.ring-chart {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 180px;
+  height: 180px;
+  border-radius: 9999px;
+}
+
+.ring-chart::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border-radius: 9999px;
+  background: white;
+  box-shadow: inset 0 0 0 1px rgba(24, 32, 47, 0.04);
+}
+
+.ring-chart > * {
+  position: relative;
+  z-index: 1;
+}
+
+.app-grid {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 272px minmax(0, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.field-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.field-input {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgba(24, 86, 208, 0.12);
+  background: rgba(255, 255, 255, 0.96);
+  padding: 0.9rem 1rem;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field-input:focus {
+  border-color: rgba(24, 86, 208, 0.48);
+  box-shadow: 0 0 0 4px rgba(24, 86, 208, 0.08);
+}
+
+.field-error {
+  font-size: 0.82rem;
+  color: var(--danger);
+}
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+  color: white;
+  padding: 0.95rem 1.45rem;
+  font-weight: 600;
+  box-shadow: 0 18px 34px rgba(24, 86, 208, 0.24);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 22px 38px rgba(24, 86, 208, 0.28);
+}
+
+.button-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  border: 1px solid rgba(24, 86, 208, 0.16);
+  background: white;
+  color: var(--foreground);
+  padding: 0.85rem 1.15rem;
+  font-weight: 600;
 }

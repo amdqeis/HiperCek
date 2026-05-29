@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MedPredict Frontend
 
-## Getting Started
+Frontend ini menggunakan Next.js App Router dan terhubung ke backend Spring Boot untuk:
 
-First, run the development server:
+- membuka landing page,
+- mengirim form prediksi kesehatan,
+- menampilkan hasil hipertensi dan kardiovaskular,
+- melihat serta menghapus history prediksi.
+
+## Menjalankan frontend
+
+Install dependency:
+
+```bash
+npm install
+```
+
+Jalankan development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Frontend akan berjalan di:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment
 
-## Learn More
+Secara default frontend memanggil backend Spring di:
 
-To learn more about Next.js, take a look at the following resources:
+```text
+http://localhost:8080
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Jika berbeda, set env berikut:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+```
 
-## Deploy on Vercel
+## Route utama
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/` landing page
+- `/predict` form input dan hasil prediksi terakhir
+- `/history` daftar riwayat prediksi yang tersimpan di backend

@@ -1,32 +1,34 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.UUID;
 
 public class RiwayatPrediksi {
+    private final String id;
+    private final LocalDateTime waktuTambah;
+    private final HasilPrediksi hipertensi;
+    private final HasilPrediksi kardiovaskular;
 
-    private ArrayList<HasilPrediksi> daftarHasil;
-    private LocalDateTime waktuTambah;
-
-    public RiwayatPrediksi(ArrayList<HasilPrediksi> daftarHasil){
-        if (daftarHasil == null){
-            this.daftarHasil = new ArrayList<>();
-        } else {
-            this.daftarHasil = daftarHasil;
-        }
-        this.WaktuTambah = LocalDateTime.now();
-    }
-
-    public void tambahHasil(HasilPrediksi hasil){
-        this.daftarHasil.add(hasil);
+    public RiwayatPrediksi(HasilPrediksi hipertensi, HasilPrediksi kardiovaskular) {
+        this.id = UUID.randomUUID().toString();
         this.waktuTambah = LocalDateTime.now();
+        this.hipertensi = hipertensi;
+        this.kardiovaskular = kardiovaskular;
     }
 
-    public ArrayList<HasilPrediksi>getSemuaHasil(){
-        return this.daftarHasil;
+    public String getId() {
+        return id;
     }
 
-    public LocalDateTime getWaktuTambah(){
-        return this.waktuTambah;
+    public LocalDateTime getWaktuTambah() {
+        return waktuTambah;
+    }
+
+    public HasilPrediksi getHipertensi() {
+        return hipertensi;
+    }
+
+    public HasilPrediksi getKardiovaskular() {
+        return kardiovaskular;
     }
 }

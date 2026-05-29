@@ -1,16 +1,24 @@
-# FastAPI Hypertension Risk API
+# FastAPI Health Risk API
 
-API ini menyediakan **1 endpoint** untuk menghitung persentase risiko hipertensi berdasarkan file model `hypertension_model.joblib`.
+API ini menyediakan **2 endpoint** untuk menghitung persentase risiko hipertensi dan risiko kardiovaskular berdasarkan model machine learning yang sudah dilatih.
 
 ## Endpoint
+
+### 1. Prediksi Hipertensi
 
 - Method: `POST`
 - URL: `/predict`
 - Output: `float` berisi persentase risiko hipertensi, misalnya `72.413598271`
 
+### 2. Prediksi Kardiovaskular
+
+- Method: `POST`
+- URL: `/predict/cardiovascular`
+- Output: `float` berisi persentase risiko kardiovaskular, misalnya `18.0`
+
 ## Format Input
 
-Body request harus berupa JSON dengan field berikut:
+Body request endpoint hipertensi:
 
 ```json
 {
@@ -35,6 +43,19 @@ Keterangan field:
 - `smoking_status`: salah satu dari `Current`, `Former`, `Never`
 - `physical_activity_level`: salah satu dari `High`, `Low`, `Moderate`
 - `diabetes`: `1` jika pasien diabetes, `0` jika tidak
+
+Body request endpoint kardiovaskular:
+
+```json
+{
+  "age": 50,
+  "bmi": 26.5,
+  "systolic_bp": 140,
+  "diastolic_bp": 90,
+  "smoking_status": "Never",
+  "physical_activity_level": "Low"
+}
+```
 
 ## Menjalankan API
 
@@ -173,6 +194,21 @@ payload = {
 
 response = requests.post("http://127.0.0.1:8000/predict", json=payload, timeout=30)
 print(response.json())
+```
+
+### cURL Kardiovaskular
+
+```bash
+curl -X POST "http://127.0.0.1:8000/predict/cardiovascular" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "age": 50,
+    "bmi": 26.5,
+    "systolic_bp": 140,
+    "diastolic_bp": 90,
+    "smoking_status": "Never",
+    "physical_activity_level": "Low"
+  }'
 ```
 
 ## Catatan

@@ -1,39 +1,38 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 public class HasilPrediksi {
     private double persentaseRisiko;
     private String kategoriRisiko;
-    private String saran;
+    private String catatan;
+    private List<String> saran;
 
-    public HasilPrediksi(double persentaseRisiko, String kategoriRisiko, String saran) {
-        setPersentaseRisiko(persentaseRisiko);
-        setKategoriRisiko(kategoriRisiko);
-        setSaran(saran);
+    public HasilPrediksi(
+        double persentaseRisiko,
+        String kategoriRisiko,
+        String catatan,
+        List<String> saran
+    ) {
+        this.persentaseRisiko = persentaseRisiko;
+        this.kategoriRisiko = kategoriRisiko;
+        this.catatan = catatan;
+        this.saran = List.copyOf(saran);
     }
 
     public double getPersentaseRisiko() {
         return persentaseRisiko;
     }
 
-    public void setPersentaseRisiko(double persentaseRisiko) {
-        this.persentaseRisiko = persentaseRisiko;
-    }
-
     public String getKategoriRisiko() {
         return kategoriRisiko;
     }
 
-    public void setKategoriRisiko(String kategoriRisiko) {
-        this.kategoriRisiko = kategoriRisiko;
+    public String getCatatan() {
+        return catatan;
     }
 
-    public String getSaran() {
+    public List<String> getSaran() {
         return saran;
-    }
-
-    public void setSaran(String saran) {
-        this.saran = saran;
     }
 }
