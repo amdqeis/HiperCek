@@ -16,6 +16,18 @@ public class RiwayatPrediksi {
         this.kardiovaskular = kardiovaskular;
     }
 
+    public RiwayatPrediksi(
+        String id,
+        LocalDateTime waktuTambah,
+        HasilPrediksi hipertensi,
+        HasilPrediksi kardiovaskular
+    ) {
+        this.id = id;
+        this.waktuTambah = waktuTambah;
+        this.hipertensi = hipertensi;
+        this.kardiovaskular = kardiovaskular;
+    }
+
     public String getId() {
         return id;
     }

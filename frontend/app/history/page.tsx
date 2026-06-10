@@ -64,7 +64,7 @@ export default function HistoryPage() {
         <header className="mb-8">
           <h1 className="heading-font text-4xl font-bold tracking-[-0.03em]">Riwayat Prediksi</h1>
           <p className="mt-4 text-lg leading-8 text-muted">
-            Semua hasil yang pernah dikirim akan tersimpan selama backend aktif dan dapat dihapus.
+            Semua hasil prediksi tersimpan di database dan dapat dihapus kapan saja.
           </p>
         </header>
 
