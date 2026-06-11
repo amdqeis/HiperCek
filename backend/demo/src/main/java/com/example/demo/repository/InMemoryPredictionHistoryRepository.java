@@ -6,9 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public class InMemoryPredictionHistoryRepository implements PredictionHistoryRepository {
     private final ConcurrentHashMap<String, RiwayatPrediksi> storage = new ConcurrentHashMap<>();
 
