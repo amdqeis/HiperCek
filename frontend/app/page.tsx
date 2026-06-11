@@ -33,7 +33,7 @@ export default function Home() {
       <section className="mx-auto flex min-h-screen w-full max-w-[1240px] flex-col px-6 pb-10 pt-6 lg:px-10">
         <header className="flex items-center justify-between rounded-[2rem] border border-white/70 bg-white/80 px-6 py-5 shadow-[0_12px_30px_rgba(32,78,172,0.08)] backdrop-blur">
           <div>
-            <p className="heading-font text-[2rem] font-bold text-[var(--primary)]">MedPredict</p>
+            <p className="heading-font text-[2rem] font-bold text-[var(--primary)]">MedCheck</p>
           </div>
           <nav className="hidden items-center gap-8 text-sm text-muted md:flex">
             <Link href="/predict">Mulai Prediksi</Link>
@@ -115,8 +115,8 @@ export default function Home() {
         </section>
 
         <footer className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/80 px-2 py-8 text-sm text-muted md:flex-row">
-          <p className="heading-font text-2xl font-bold text-[var(--primary)]">MedPredict</p>
-          <p>© 2026 MedPredict. Solusi analisis hipertensi modern.</p>
+          <p className="heading-font text-2xl font-bold text-[var(--primary)]">MedCheck</p>
+          <p>© 2026 MedCheck. Solusi analisis hipertensi modern.</p>
           <div className="flex items-center gap-6">
             <span>Privasi</span>
             <span>Syarat</span>

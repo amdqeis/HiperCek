@@ -12,103 +12,60 @@ public class HealthData {
     private int aktivitasFisik;
     private boolean diabetes;
 
-  
-    public int getUsia() {
-        return usia;
-    }
+    // DIPERBOLEHKAN MENAMBAH Constructor tambahan (no-arg)
+    public HealthData() {}
 
-    public void setUsia(int usia) {
+    public HealthData(
+        int usia,
+        int sistolik,
+        int diastolik,
+        double bmi,
+        boolean riwayatKeluarga,
+        String merokok,
+        int aktivitasFisik,
+        boolean diabetes
+    ) {
         this.usia = usia;
-    }
-
-    public int getSistolik() {
-        return sistolik;
-    }
-
-    public void setSistolik(int sistolik) {
         this.sistolik = sistolik;
-    }
-
-    public int getDiastolik() {
-        return diastolik;
-    }
-
-    public void setDiastolik(int diastolik) {
         this.diastolik = diastolik;
-    }
-
-    public double getBmi() {
-        return bmi;
-    }
-
-    public void setBmi(double bmi) {
         this.bmi = bmi;
-    }
-
-    public boolean isRiwayatKeluarga() {
-        return riwayatKeluarga;
-    }
-
-    public void setRiwayatKeluarga(boolean riwayatKeluarga) {
         this.riwayatKeluarga = riwayatKeluarga;
-    }
-
-    public String getMerokok() {
-        return merokok;
-    }
-
-    public void setMerokok(String merokok) {
         this.merokok = merokok;
-    }
-
-    public int getAktivitasFisik() {
-        return aktivitasFisik;
-    }
-
-    public void setAktivitasFisik(int aktivitasFisik) {
         this.aktivitasFisik = aktivitasFisik;
-    }
-
-    public boolean isDiabetes() {
-        return diabetes;
-    }
-
-    public void setDiabetes(boolean diabetes) {
         this.diabetes = diabetes;
     }
 
+    public int getUsia() { return usia; }
+    public void setUsia(int usia) { this.usia = usia; }
+
+    public int getSistolik() { return sistolik; }
+    public void setSistolik(int sistolik) { this.sistolik = sistolik; }
+
+    public int getDiastolik() { return diastolik; }
+    public void setDiastolik(int diastolik) { this.diastolik = diastolik; }
+
+    public double getBmi() { return bmi; }
+    public void setBmi(double bmi) { this.bmi = bmi; }
+
+    public boolean isRiwayatKeluarga() { return riwayatKeluarga; }
+    public void setRiwayatKeluarga(boolean riwayatKeluarga) { this.riwayatKeluarga = riwayatKeluarga; }
+
+    public String getMerokok() { return merokok; }
+    public void setMerokok(String merokok) { this.merokok = merokok; }
+
+    public int getAktivitasFisik() { return aktivitasFisik; }
+    public void setAktivitasFisik(int aktivitasFisik) { this.aktivitasFisik = aktivitasFisik; }
+
+    public boolean isDiabetes() { return diabetes; }
+    public void setDiabetes(boolean diabetes) { this.diabetes = diabetes; }
+
     public boolean isValid() {
-        if (usia < 1 || usia > 120) {
-            return false;
-        }
-
-        // rentang tekanan darah manusia (mmHg)
-        if (sistolik < 70 || sistolik > 250) {
-            return false;
-        }
-
-        // diastolik harus lebih kecil dari sistolik
-        if (diastolik < 40 || diastolik > 150 || diastolik >= sistolik) {
-            return false;
-        }
-
-        if (bmi < 10.0 || bmi > 70.0) {
-            return false;
-        }
-
-        // status merokok
-        if (merokok == null ||
-            (!merokok.equals("Never") &&
-             !merokok.equals("Former") &&
-             !merokok.equals("Current"))) {
-            return false;
-        }
-
-        // aktivitas fisik
-        if (aktivitasFisik < 0 || aktivitasFisik > 2) {
-            return false;
-        }
-
+        if (usia < 1 || usia > 120) return false;
+        if (sistolik < 70 || sistolik > 250) return false;
+        if (diastolik < 40 || diastolik > 150 || diastolik >= sistolik) return false;
+        if (bmi < 10.0 || bmi > 70.0) return false;
+        if (merokok == null || (!merokok.equals("Never") && !merokok.equals("Former") && !merokok.equals("Current"))) return false;
+        if (aktivitasFisik < 0 || aktivitasFisik > 2) return false;
         return true;
     }
 
@@ -121,7 +78,7 @@ public class HealthData {
         };
     }
 
-    public Map<String, Object> toHypertensionPayload() {
+    public Map<String, Object> toHypertensionLevel() {
         return Map.of(
             "age", usia,
             "bmi", bmi,
@@ -134,7 +91,7 @@ public class HealthData {
         );
     }
 
-    public Map<String, Object> toCardiovascularPayload() {
+    public Map<String, Object> toCardiovascularLevel() {
         return Map.of(
             "age", usia,
             "bmi", bmi,

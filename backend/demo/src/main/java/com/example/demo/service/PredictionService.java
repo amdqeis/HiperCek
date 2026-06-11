@@ -29,13 +29,13 @@ public class PredictionService {
             throw new IllegalArgumentException("Data kesehatan tidak valid.");
         }
 
-        double hypertensionPercentage = mlApiClient.predictHypertension(healthData.toHypertensionPayload());
-        double cardiovascularPercentage = mlApiClient.predictCardiovascular(healthData.toCardiovascularPayload());
+        double hypertensionPercentage = mlApiClient.predictHypertension(healthData.toHypertensionLevel());
+        double cardiovascularPercentage = mlApiClient.predictCardiovascular(healthData.toCardiovascularLevel());
 
         HasilPrediksi hypertension = buildRisk("hypertension", hypertensionPercentage, healthData);
         HasilPrediksi cardiovascular = buildRisk("cardiovascular", cardiovascularPercentage, healthData);
 
-        RiwayatPrediksi saved = historyRepository.save(new RiwayatPrediksi(hypertension, cardiovascular));
+        RiwayatPrediksi saved = historyRepository.save(new RiwayatPrediksi(new HasilPrediksi[]{hypertension, cardiovascular}));
         return toResponse(saved);
     }
 
@@ -79,7 +79,9 @@ public class PredictionService {
         String category = determineCategory(percentage);
         String note = buildNote(riskType, category, healthData);
         List<String> suggestions = buildSuggestions(category, healthData);
-        return new HasilPrediksi(percentage, category, note, suggestions);
+        HasilPrediksi hasil = new HasilPrediksi(percentage, category, suggestions);
+        hasil.setCatatan(note);
+        return hasil;
     }
 
     String determineCategory(double percentage) {

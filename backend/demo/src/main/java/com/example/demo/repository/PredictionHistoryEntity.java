@@ -69,21 +69,24 @@ public class PredictionHistoryEntity {
     }
 
     public RiwayatPrediksi toDomain() {
+        HasilPrediksi hipertensi = new HasilPrediksi(
+            hipertensiPersentaseRisiko,
+            hipertensiKategoriRisiko,
+            hipertensiSaran
+        );
+        hipertensi.setCatatan(hipertensiCatatan);
+
+        HasilPrediksi kardiovaskular = new HasilPrediksi(
+            kardiovaskularPersentaseRisiko,
+            kardiovaskularKategoriRisiko,
+            kardiovaskularSaran
+        );
+        kardiovaskular.setCatatan(kardiovaskularCatatan);
+
         return new RiwayatPrediksi(
             id,
             waktuTambah,
-            new HasilPrediksi(
-                hipertensiPersentaseRisiko,
-                hipertensiKategoriRisiko,
-                hipertensiCatatan,
-                hipertensiSaran
-            ),
-            new HasilPrediksi(
-                kardiovaskularPersentaseRisiko,
-                kardiovaskularKategoriRisiko,
-                kardiovaskularCatatan,
-                kardiovaskularSaran
-            )
+            new HasilPrediksi[]{hipertensi, kardiovaskular}
         );
     }
 }

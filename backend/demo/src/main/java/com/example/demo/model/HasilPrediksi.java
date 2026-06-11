@@ -11,13 +11,16 @@ public class HasilPrediksi {
     public HasilPrediksi(
         double persentaseRisiko,
         String kategoriRisiko,
-        String catatan,
         List<String> saran
     ) {
         this.persentaseRisiko = persentaseRisiko;
         this.kategoriRisiko = kategoriRisiko;
+        this.saran = saran != null ? List.copyOf(saran) : null;
+    }
+    
+    // DIPERBOLEHKAN MENAMBAH Setter
+    public void setCatatan(String catatan) {
         this.catatan = catatan;
-        this.saran = List.copyOf(saran);
     }
 
     public double getPersentaseRisiko() {

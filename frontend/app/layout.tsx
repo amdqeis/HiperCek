@@ -13,7 +13,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "MedPredict",
+  title: "MedCheck",
   description: "Prediksi hipertensi dan risiko kardiovaskular sederhana.",
 };
 

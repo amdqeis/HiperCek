@@ -36,7 +36,7 @@ export default function PredictPage() {
       return null;
     }
 
-    const stored = window.sessionStorage.getItem("medpredict:last-result");
+    const stored = window.sessionStorage.getItem("medcheck:last-result");
     if (!stored) {
       return null;
     }
@@ -44,7 +44,7 @@ export default function PredictPage() {
     try {
       return JSON.parse(stored) as PredictionResponse;
     } catch {
-      window.sessionStorage.removeItem("medpredict:last-result");
+      window.sessionStorage.removeItem("medcheck:last-result");
       return null;
     }
   });
@@ -64,7 +64,7 @@ export default function PredictPage() {
     try {
       const response = await createPrediction(form);
       setResult(response);
-      window.sessionStorage.setItem("medpredict:last-result", JSON.stringify(response));
+      window.sessionStorage.setItem("medcheck:last-result", JSON.stringify(response));
     } catch (error) {
       setFieldErrors(parseFieldErrors(error));
       setSubmitError(error instanceof Error ? error.message : "Prediksi gagal diproses.");
@@ -76,7 +76,7 @@ export default function PredictPage() {
   function resetResult() {
     setResult(null);
     setSubmitError(null);
-    window.sessionStorage.removeItem("medpredict:last-result");
+    window.sessionStorage.removeItem("medcheck:last-result");
   }
 
   if (result) {
@@ -266,10 +266,6 @@ export default function PredictPage() {
             <button className="button-primary min-w-[240px]" disabled={isSubmitting} type="submit">
               {isSubmitting ? "Memproses Prediksi..." : "Analisis Sekarang"}
             </button>
-            <p className="text-sm leading-7 text-muted">
-              Data dikirim ke backend Spring Boot lalu diteruskan ke API machine learning untuk
-              menghasilkan dua prediksi sekaligus.
-            </p>
           </div>
         </form>
       </section>

@@ -1,4 +1,4 @@
-# MedPredict Frontend
+# MedCheck Frontend
 
 Frontend ini menggunakan Next.js App Router dan terhubung ke backend Spring Boot untuk:
 
