@@ -1,0 +1,106 @@
+{
+  "features": [
+    "age",
+    "bmi",
+    "systolic",
+    "diastolic",
+    "smoke",
+    "active"
+  ],
+  "numeric_features": [
+    "age",
+    "bmi",
+    "systolic",
+    "diastolic",
+    "smoke",
+    "active"
+  ],
+  "target": "target",
+  "best_model": "Gradient Boosting",
+  "selection_metric": "F1-score, then smaller serialized model size",
+  "model_results": [
+    {
+      "Model": "Gradient Boosting",
+      "Accuracy": 0.7239285714285715,
+      "Precision": 0.7377372817008352,
+      "Recall": 0.694396798170383,
+      "F1": 0.7154112362859878,
+      "ROC_AUC": 0.7888459616639873,
+      "Model_Size_MB": 0.06,
+      "Within_Size_Limit": true
+    },
+    {
+      "Model": "Hist Gradient Boosting",
+      "Accuracy": 0.7224285714285714,
+      "Precision": 0.736322188449848,
+      "Recall": 0.6925385934819898,
+      "F1": 0.7137595757218621,
+      "ROC_AUC": 0.7880015022045722,
+      "Model_Size_MB": 0.13,
+      "Within_Size_Limit": true
+    },
+    {
+      "Model": "Random Forest",
+      "Accuracy": 0.7205714285714285,
+      "Precision": 0.736068585425597,
+      "Recall": 0.6872498570611778,
+      "F1": 0.7108219988172679,
+      "ROC_AUC": 0.7866775425885855,
+      "Model_Size_MB": 5.74,
+      "Within_Size_Limit": true
+    },
+    {
+      "Model": "Decision Tree",
+      "Accuracy": 0.707,
+      "Precision": 0.7208485958485958,
+      "Recall": 0.6751000571755289,
+      "F1": 0.6972246826099794,
+      "ROC_AUC": 0.765705005128165,
+      "Model_Size_MB": 0.06,
+      "Within_Size_Limit": true
+    },
+    {
+      "Model": "Logistic Regression",
+      "Accuracy": 0.7035,
+      "Precision": 0.7143933685003768,
+      "Recall": 0.6775300171526587,
+      "F1": 0.6954735529308195,
+      "ROC_AUC": 0.7688742714691499,
+      "Model_Size_MB": 0.0,
+      "Within_Size_Limit": true
+    },
+    {
+      "Model": "AdaBoost",
+      "Accuracy": 0.7105714285714285,
+      "Precision": 0.7636103151862464,
+      "Recall": 0.6094911377930246,
+      "F1": 0.6779014308426073,
+      "ROC_AUC": 0.7804227650360048,
+      "Model_Size_MB": 0.02,
+      "Within_Size_Limit": true
+    },
+    {
+      "Model": "Extra Trees",
+      "Accuracy": 0.6451428571428571,
+      "Precision": 0.6404043201329271,
+      "Recall": 0.6610920526014865,
+      "F1": 0.6505837670558448,
+      "ROC_AUC": 0.7000702081861904,
+      "Model_Size_MB": 0.96,
+      "Within_Size_Limit": true
+    },
+    {
+      "Model": "Gaussian Naive Bayes",
+      "Accuracy": 0.5458571428571428,
+      "Precision": 0.7527733755942948,
+      "Recall": 0.13579188107489995,
+      "F1": 0.23007992249939452,
+      "ROC_AUC": 0.6603927054343528,
+      "Model_Size_MB": 0.0,
+      "Within_Size_Limit": true
+    }
+  ],
+  "dataset_rows": 70000,
+  "max_model_size_mb": 100.0,
+  "model_size_mb": 0.06
+}
