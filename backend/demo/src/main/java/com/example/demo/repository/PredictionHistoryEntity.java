@@ -1,14 +1,27 @@
 package com.example.demo.repository;
 
+<<<<<<< HEAD
 import com.example.demo.model.HasilPrediksi;
 import com.example.demo.model.RiwayatPrediksi;
+=======
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.example.demo.model.HasilPrediksi;
+import com.example.demo.model.HealthData;
+import com.example.demo.model.RiwayatPrediksi;
+
+>>>>>>> origin/Caca
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+<<<<<<< HEAD
 import java.time.LocalDateTime;
 import java.util.List;
+=======
+>>>>>>> origin/Caca
 
 @Entity
 @Table(name = "riwayat_prediksi")
@@ -19,6 +32,33 @@ public class PredictionHistoryEntity {
     @Column(name = "waktu_tambah", nullable = false)
     private LocalDateTime waktuTambah;
 
+<<<<<<< HEAD
+=======
+    @Column(name = "usia")
+    private Integer usia;
+
+    @Column(name = "bmi")
+    private Double bmi;
+
+    @Column(name = "sistolik")
+    private Integer sistolik;
+
+    @Column(name = "diastolik")
+    private Integer diastolik;
+
+    @Column(name = "riwayat_keluarga")
+    private Boolean riwayatKeluarga;
+
+    @Column(name = "status_merokok")
+    private String statusMerokok;
+
+    @Column(name = "aktivitas_fisik")
+    private Integer aktivitasFisik;
+
+    @Column(name = "diabetes")
+    private Boolean diabetes;
+
+>>>>>>> origin/Caca
     @Column(name = "hipertensi_persentase_risiko", nullable = false)
     private double hipertensiPersentaseRisiko;
 
@@ -51,13 +91,36 @@ public class PredictionHistoryEntity {
     private PredictionHistoryEntity(RiwayatPrediksi item) {
         HasilPrediksi hipertensi = item.getHipertensi();
         HasilPrediksi kardiovaskular = item.getKardiovaskular();
+<<<<<<< HEAD
 
         this.id = item.getId();
         this.waktuTambah = item.getWaktuTambah();
+=======
+        HealthData healthData = item.getHealthData();
+
+        this.id = item.getId();
+        this.waktuTambah = item.getWaktuTambah();
+
+        if (healthData != null) {
+            this.usia = healthData.getUsia();
+            this.bmi = healthData.getBmi();
+            this.sistolik = healthData.getSistolik();
+            this.diastolik = healthData.getDiastolik();
+            this.riwayatKeluarga = healthData.isRiwayatKeluarga();
+            this.statusMerokok = healthData.getMerokok();
+            this.aktivitasFisik = healthData.getAktivitasFisik();
+            this.diabetes = healthData.isDiabetes();
+        }
+
+>>>>>>> origin/Caca
         this.hipertensiPersentaseRisiko = hipertensi.getPersentaseRisiko();
         this.hipertensiKategoriRisiko = hipertensi.getKategoriRisiko();
         this.hipertensiCatatan = hipertensi.getCatatan();
         this.hipertensiSaran = hipertensi.getSaran();
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Caca
         this.kardiovaskularPersentaseRisiko = kardiovaskular.getPersentaseRisiko();
         this.kardiovaskularKategoriRisiko = kardiovaskular.getKategoriRisiko();
         this.kardiovaskularCatatan = kardiovaskular.getCatatan();
@@ -70,13 +133,20 @@ public class PredictionHistoryEntity {
 
     public RiwayatPrediksi toDomain() {
         HasilPrediksi hipertensi = new HasilPrediksi(
+<<<<<<< HEAD
             hipertensiPersentaseRisiko,
             hipertensiKategoriRisiko,
             hipertensiSaran
+=======
+                hipertensiPersentaseRisiko,
+                hipertensiKategoriRisiko,
+                hipertensiSaran
+>>>>>>> origin/Caca
         );
         hipertensi.setCatatan(hipertensiCatatan);
 
         HasilPrediksi kardiovaskular = new HasilPrediksi(
+<<<<<<< HEAD
             kardiovaskularPersentaseRisiko,
             kardiovaskularKategoriRisiko,
             kardiovaskularSaran
@@ -90,3 +160,33 @@ public class PredictionHistoryEntity {
         );
     }
 }
+=======
+                kardiovaskularPersentaseRisiko,
+                kardiovaskularKategoriRisiko,
+                kardiovaskularSaran
+        );
+        kardiovaskular.setCatatan(kardiovaskularCatatan);
+
+        HealthData healthData = null;
+        if (usia != null && bmi != null && sistolik != null && diastolik != null) {
+            healthData = new HealthData(
+                    usia,
+                    sistolik,
+                    diastolik,
+                    bmi,
+                    Boolean.TRUE.equals(riwayatKeluarga),
+                    statusMerokok,
+                    aktivitasFisik != null ? aktivitasFisik : 0,
+                    Boolean.TRUE.equals(diabetes)
+            );
+        }
+
+        return new RiwayatPrediksi(
+                id,
+                waktuTambah,
+                healthData,
+                new HasilPrediksi[]{hipertensi, kardiovaskular}
+        );
+    }
+}
+>>>>>>> origin/Caca

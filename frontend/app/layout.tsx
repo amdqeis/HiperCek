@@ -25,9 +25,17 @@ export default function RootLayout({
   return (
     <html
       lang="id"
+<<<<<<< HEAD
+=======
+      data-scroll-behavior="smooth"
+>>>>>>> origin/Caca
       className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/Caca
