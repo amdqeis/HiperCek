@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class PredictionServiceTest {
     @Test
     void determineCategoryUsesConfiguredThresholds() {
-        PredictionService service = new PredictionService(null, new InMemoryPredictionHistoryRepository());
+        PredictionService service = new PredictionService(null, null, new InMemoryPredictionHistoryRepository());
 
         assertThat(service.determineCategory(29.9)).isEqualTo("low");
         assertThat(service.determineCategory(30.0)).isEqualTo("medium");

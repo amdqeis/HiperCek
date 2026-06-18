@@ -11,14 +11,6 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * JPA entity untuk tabel prediction_history di MySQL.
- * Menyimpan semua field secara flat (bukan relasi) agar query sederhana.
- *
- * Konversi domain <-> entity:
- *   fromDomain(RiwayatPrediksi) → entity untuk disimpan ke DB
- *   toDomain()                  → rebuild RiwayatPrediksi dari DB
- */
 @Entity
 @Table(name = "prediction_history")
 public class PredictionHistoryEntity {
@@ -58,9 +50,6 @@ public class PredictionHistoryEntity {
 
     protected PredictionHistoryEntity() {}
 
-    /**
-     * Konversi dari domain model ke entity untuk disimpan ke database.
-     */
     public static PredictionHistoryEntity fromDomain(RiwayatPrediksi domain) {
         PredictionHistoryEntity entity = new PredictionHistoryEntity();
         entity.id = domain.getId();
@@ -94,9 +83,6 @@ public class PredictionHistoryEntity {
         return entity;
     }
 
-    /**
-     * Konversi dari entity database kembali ke domain model.
-     */
     public RiwayatPrediksi toDomain() {
         HealthData healthData = new HealthData(
             usia, sistolik, diastolik, bmi,

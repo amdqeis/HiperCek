@@ -20,7 +20,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.repository.InMemoryPredictionHistoryRepository;
-import com.example.demo.service.MlApiClient;
+import com.example.demo.service.CardiovascularAIService;
+import com.example.demo.service.HypertensionAIService;
 import com.example.demo.service.PredictionService;
 
 class PredictionControllerTest {
@@ -35,7 +36,8 @@ class PredictionControllerTest {
         restTemplate = new RestTemplate();
         server = MockRestServiceServer.createServer(restTemplate);
         PredictionService predictionService = new PredictionService(
-            new MlApiClient(restTemplate, "http://127.0.0.1:8000"),
+            new HypertensionAIService(restTemplate, "http://127.0.0.1:8000"),
+            new CardiovascularAIService(restTemplate, "http://127.0.0.1:8000"),
             new InMemoryPredictionHistoryRepository()
         );
         mockMvc = MockMvcBuilders.standaloneSetup(new PredictionController(predictionService))
