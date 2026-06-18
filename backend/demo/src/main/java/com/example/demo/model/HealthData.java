@@ -12,7 +12,6 @@ public class HealthData {
     private int aktivitasFisik;
     private boolean diabetes;
 
-    // DIPERBOLEHKAN MENAMBAH Constructor tambahan (no-arg)
     public HealthData() {}
 
     public HealthData(
