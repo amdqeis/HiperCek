@@ -5,11 +5,7 @@ import { RefreshIcon } from "@/components/icons";
 import { RiskCard } from "@/components/risk-card";
 import { createPrediction } from "@/lib/api";
 import type { PredictionFormData, PredictionResponse } from "@/lib/types";
-<<<<<<< HEAD
-import { useState } from "react";
-=======
 import { useEffect, useState } from "react";
->>>>>>> origin/Caca
 
 const initialForm: PredictionFormData = {
   age: 45,
@@ -35,30 +31,10 @@ export default function PredictPage() {
   const [form, setForm] = useState<PredictionFormData>(initialForm);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
-<<<<<<< HEAD
-  const [result, setResult] = useState<PredictionResponse | null>(() => {
-    if (typeof window === "undefined") {
-      return null;
-    }
-
-    const stored = window.sessionStorage.getItem("medcheck:last-result");
-    if (!stored) {
-      return null;
-    }
-
-    try {
-      return JSON.parse(stored) as PredictionResponse;
-    } catch {
-      window.sessionStorage.removeItem("medcheck:last-result");
-      return null;
-    }
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-=======
   const [result, setResult] = useState<PredictionResponse | null>(null);
   const [mounted, setMounted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
 
@@ -73,7 +49,6 @@ export default function PredictPage() {
       window.sessionStorage.removeItem("medcheck:last-result");
     }
   }, []);
->>>>>>> origin/Caca
 
   function updateField<K extends keyof PredictionFormData>(key: K, value: PredictionFormData[K]) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -104,8 +79,6 @@ export default function PredictPage() {
     window.sessionStorage.removeItem("medcheck:last-result");
   }
 
-<<<<<<< HEAD
-=======
   if (!mounted) {
     return (
       <AppShell active="predict">
@@ -118,7 +91,6 @@ export default function PredictPage() {
     );
   }
 
->>>>>>> origin/Caca
   if (result) {
     return (
       <AppShell active="predict">

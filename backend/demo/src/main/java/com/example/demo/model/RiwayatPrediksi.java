@@ -4,16 +4,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class RiwayatPrediksi {
-<<<<<<< HEAD
-    // Tambahan atribut untuk mendukung method getter
-    private String id;
-    private LocalDateTime waktuTambah;
-    
-    // Sesuai diagram
-    private HasilPrediksi[] daftarHasil;
-
-    public RiwayatPrediksi(HasilPrediksi[] daftarHasil) {
-=======
     private String id;
     private LocalDateTime waktuTambah;
     private HealthData healthData;
@@ -25,18 +15,10 @@ public class RiwayatPrediksi {
 
     public RiwayatPrediksi(HealthData healthData, HasilPrediksi[] daftarHasil) {
         this.healthData = healthData;
->>>>>>> origin/Caca
         this.daftarHasil = daftarHasil;
         this.id = UUID.randomUUID().toString();
         this.waktuTambah = LocalDateTime.now();
     }
-<<<<<<< HEAD
-    
-    // DIPERBOLEHKAN MENAMBAH Constructor tambahan
-    public RiwayatPrediksi(String id, LocalDateTime waktuTambah, HasilPrediksi[] daftarHasil) {
-        this.id = id;
-        this.waktuTambah = waktuTambah;
-=======
 
     public RiwayatPrediksi(String id, LocalDateTime waktuTambah, HasilPrediksi[] daftarHasil) {
         this(id, waktuTambah, null, daftarHasil);
@@ -46,7 +28,6 @@ public class RiwayatPrediksi {
         this.id = id;
         this.waktuTambah = waktuTambah;
         this.healthData = healthData;
->>>>>>> origin/Caca
         this.daftarHasil = daftarHasil;
     }
 
@@ -58,13 +39,10 @@ public class RiwayatPrediksi {
         return waktuTambah;
     }
 
-<<<<<<< HEAD
-=======
     public HealthData getHealthData() {
         return healthData;
     }
 
->>>>>>> origin/Caca
     public HasilPrediksi getHipertensi() {
         if (daftarHasil != null && daftarHasil.length > 0) {
             return daftarHasil[0];
@@ -78,8 +56,4 @@ public class RiwayatPrediksi {
         }
         return null;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/Caca

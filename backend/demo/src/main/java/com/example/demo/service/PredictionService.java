@@ -1,15 +1,11 @@
 package com.example.demo.service;
 
-<<<<<<< HEAD
-import com.example.demo.dto.PredictionHistoryItemDto;
-=======
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.PredictionHistoryItemDto;
 import com.example.demo.dto.PredictionInputDto;
->>>>>>> origin/Caca
 import com.example.demo.dto.PredictionRequestDto;
 import com.example.demo.dto.PredictionResponseDto;
 import com.example.demo.dto.PredictionRiskDto;
@@ -18,11 +14,6 @@ import com.example.demo.model.HasilPrediksi;
 import com.example.demo.model.HealthData;
 import com.example.demo.model.RiwayatPrediksi;
 import com.example.demo.repository.PredictionHistoryRepository;
-<<<<<<< HEAD
-import java.util.List;
-import org.springframework.stereotype.Service;
-=======
->>>>>>> origin/Caca
 
 @Service
 public class PredictionService {
@@ -47,11 +38,7 @@ public class PredictionService {
         HasilPrediksi hypertension = buildRisk("hypertension", hypertensionPercentage, healthData);
         HasilPrediksi cardiovascular = buildRisk("cardiovascular", cardiovascularPercentage, healthData);
 
-<<<<<<< HEAD
-        RiwayatPrediksi saved = historyRepository.save(new RiwayatPrediksi(new HasilPrediksi[]{hypertension, cardiovascular}));
-=======
         RiwayatPrediksi saved = historyRepository.save(new RiwayatPrediksi(healthData, new HasilPrediksi[]{hypertension, cardiovascular}));
->>>>>>> origin/Caca
         return toResponse(saved);
     }
 
@@ -151,29 +138,16 @@ public class PredictionService {
 
     private PredictionResponseDto toResponse(RiwayatPrediksi item) {
         return new PredictionResponseDto(
-<<<<<<< HEAD
-            item.getId(),
-            item.getWaktuTambah(),
-            toRiskDto(item.getHipertensi()),
-            toRiskDto(item.getKardiovaskular())
-=======
                 item.getId(),
                 item.getWaktuTambah(),
                 toInputDto(item.getHealthData()),
                 toRiskDto(item.getHipertensi()),
                 toRiskDto(item.getKardiovaskular())
->>>>>>> origin/Caca
         );
     }
 
     private PredictionHistoryItemDto toHistoryItem(RiwayatPrediksi item) {
         return new PredictionHistoryItemDto(
-<<<<<<< HEAD
-            item.getId(),
-            item.getWaktuTambah(),
-            toRiskDto(item.getHipertensi()),
-            toRiskDto(item.getKardiovaskular())
-=======
                 item.getId(),
                 item.getWaktuTambah(),
                 toInputDto(item.getHealthData()),
@@ -196,7 +170,6 @@ public class PredictionService {
                 healthData.getMerokok(),
                 healthData.getPhysicalActivityLevel(),
                 healthData.isDiabetes()
->>>>>>> origin/Caca
         );
     }
 

@@ -9,8 +9,6 @@ export type PredictionFormData = {
   diabetes: boolean;
 };
 
-<<<<<<< HEAD
-=======
 export type PredictionInput = {
   age: number;
   bmi: number;
@@ -22,7 +20,6 @@ export type PredictionInput = {
   diabetes: boolean;
 };
 
->>>>>>> origin/Caca
 export type PredictionRisk = {
   percentage: number;
   category: "low" | "medium" | "high";
@@ -33,10 +30,7 @@ export type PredictionRisk = {
 export type PredictionResponse = {
   id: string;
   createdAt: string;
-<<<<<<< HEAD
-=======
   input?: PredictionInput | null;
->>>>>>> origin/Caca
   hypertension: PredictionRisk;
   cardiovascular: PredictionRisk;
 };
@@ -44,8 +38,4 @@ export type PredictionResponse = {
 export type ApiError = {
   message?: string;
   errors?: Record<string, string>;
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> origin/Caca

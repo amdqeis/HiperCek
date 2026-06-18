@@ -5,10 +5,7 @@ import { TrashIcon } from "@/components/icons";
 import { deletePredictionHistory, getPredictionHistory } from "@/lib/api";
 import type { PredictionResponse } from "@/lib/types";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
-=======
 import Link from "next/link";
->>>>>>> origin/Caca
 
 function categoryLabel(category: PredictionResponse["hypertension"]["category"]) {
   switch (category) {
@@ -95,48 +92,6 @@ export default function HistoryPage() {
         <div className="space-y-5">
           {items.map((item) => (
             <article key={item.id} className="panel rounded-[2rem] p-6">
-<<<<<<< HEAD
-              <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.22em] text-slate-400">
-                    {new Date(item.createdAt).toLocaleString("id-ID", {
-                      dateStyle: "medium",
-                      timeStyle: "short",
-                    })}
-                  </p>
-                  <div className="mt-4 grid gap-4 md:grid-cols-2">
-                    <div className="rounded-[1.4rem] bg-slate-100/90 p-5">
-                      <p className="text-sm uppercase tracking-[0.22em] text-slate-400">Hipertensi</p>
-                      <p className="heading-font mt-3 text-4xl font-bold text-slate-900">
-                        {Math.round(item.hypertension.percentage)}%
-                      </p>
-                      <p className="mt-2 font-semibold text-[var(--danger)]">
-                        {categoryLabel(item.hypertension.category)}
-                      </p>
-                      <p className="mt-3 text-sm leading-7 text-muted">{item.hypertension.note}</p>
-                    </div>
-                    <div className="rounded-[1.4rem] bg-slate-100/90 p-5">
-                      <p className="text-sm uppercase tracking-[0.22em] text-slate-400">Kardiovaskular</p>
-                      <p className="heading-font mt-3 text-4xl font-bold text-slate-900">
-                        {Math.round(item.cardiovascular.percentage)}%
-                      </p>
-                      <p className="mt-2 font-semibold text-[var(--primary)]">
-                        {categoryLabel(item.cardiovascular.category)}
-                      </p>
-                      <p className="mt-3 text-sm leading-7 text-muted">{item.cardiovascular.note}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  className="inline-flex items-center gap-2 self-start rounded-2xl border border-red-100 bg-white px-4 py-3 font-semibold text-red-600"
-                  type="button"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  <TrashIcon className="h-5 w-5" />
-                  Hapus
-                </button>
-=======
               <div className="mb-4 flex items-center justify-between gap-4">
                 <p className="text-sm uppercase tracking-[0.22em] text-slate-400">
                   {new Date(item.createdAt).toLocaleString("id-ID", {
@@ -194,7 +149,6 @@ export default function HistoryPage() {
                     {item.cardiovascular.note}
                   </p>
                 </div>
->>>>>>> origin/Caca
               </div>
             </article>
           ))}
