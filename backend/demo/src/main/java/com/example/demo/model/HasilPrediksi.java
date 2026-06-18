@@ -18,7 +18,6 @@ public class HasilPrediksi {
         this.saran = saran != null ? List.copyOf(saran) : null;
     }
     
-    // DIPERBOLEHKAN MENAMBAH Setter
     public void setCatatan(String catatan) {
         this.catatan = catatan;
     }
